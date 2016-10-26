@@ -12,12 +12,12 @@ OBJS = $(DEPS:.c=.o) $(SRCS:.c=.o)
 all: $(BUILD)/$(BIN)
 
 $(BUILD)/$(BIN): $(OBJS)
-		mkdir -p $(BUILD)
-		$(LD) $^ $(LDFLAGS) -o $@
+	mkdir -p $(BUILD)
+	$(LD) $^ $(LDFLAGS) -o $@
 
 %.o: %.c
-		$(CC) $< -c -o $@ $(CFLAGS)
+	$(CC) $< -c -o $@ $(CFLAGS)
 
 clean:
-		rm -rf $(BUILD)
-		rm -f $(OBJS)
+	rm -rf $(BUILD)
+	rm -f $(OBJS)
