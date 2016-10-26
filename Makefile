@@ -1,13 +1,23 @@
-CC=clang
-LD=clang++
+CC = clang
+LD = clang++
 
-all: poodle
+CFLAGS = -Ideps
 
-poodle: poodle.o
-		$(LD) $< $(LDFLAGS) -o $@
+BUILD = build
+BIN = poodle
+SRCS = $(wildcard src/*.c)
+DEPS = $(wildcard deps/*/*.c)
+OBJS = $(DEPS:.c=.o) $(SRCS:.c=.o)
 
-poodle.o: poodle.c
-		$(CC) $(CFLAGS) -c $<
+all: $(BUILD)/$(BIN)
+
+$(BUILD)/$(BIN): $(OBJS)
+		mkdir -p $(BUILD)
+		$(LD) $^ $(LDFLAGS) -o $@
+
+%.o: %.c
+		$(CC) $< -c -o $@ $(CFLAGS)
 
 clean:
-		-rm -f poodle.o poodle
+		rm -rf $(BUILD)
+		rm -f $(OBJS)
