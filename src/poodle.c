@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <mpc/mpc.h>
+#include <llvm-c/Core.h>
 
 mpc_parser_t *Number;
 mpc_parser_t *Symbol;
@@ -47,6 +48,8 @@ int main(int argc, char **argv) {
 
     mpc_result_t r;
 
+    LLVMContextRef llvm = LLVMContextCreate();
+
     if (mpc_parse("<stdin>", input, Poodle, &r)) {
       mpc_ast_print(r.output);
       mpc_ast_delete(r.output);
@@ -54,7 +57,10 @@ int main(int argc, char **argv) {
       mpc_err_print(r.error);
       mpc_err_delete(r.error);
     }
+
+    LLVMContextDispose(llvm);
   }
+
 
   return 0;
 }
