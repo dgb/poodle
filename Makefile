@@ -1,7 +1,13 @@
 CC = clang
 LD = clang++
 
-CFLAGS = -Ideps
+CFLAGS = -Ideps \
+				 -I`llvm-config --includedir` \
+				 `llvm-config --cflags`
+
+LDFLAGS = `llvm-config --ldflags` \
+					`llvm-config --system-libs` \
+					`llvm-config --libs engine`
 
 BUILD = build
 BIN = poodle
